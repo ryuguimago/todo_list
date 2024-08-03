@@ -1,5 +1,5 @@
 # this is a command line to do list program
-
+import pyfiglet
 # creates a new, empty todo list with headline 'to-do-list'
 def create_new_list():
     with open("list.txt", "w") as file:
@@ -19,9 +19,18 @@ def open_list():
 
 # takes user input and saves it to the existing list
 def add_item():
-    new_item = input("what do you want to add\n")
-    with open("list.txt", "a") as file:
-        file.write(f"\n{new_item}")
+    while True:
+        new_item = input("what do you want to add\n")                   #ausnahmen einfangen und error handling noch einfügen
+        with open("list.txt", "a") as file:
+            file.write(f"\n{new_item}")
+            try:
+                var = input("do you want to add a nother item? y/n\n").strip().lower()
+                if var == "n":
+                    break
+            except ValueError:
+                print("please use 'y' or 'n' to indicate your choice")
+
+
 
 # deletes old numbers of tasks
 def delete_number():
@@ -54,11 +63,20 @@ def delete_lines(filename, lines_to_delete):
             if index not in lines_to_delete:
                 file.write(line)
 
-   
-# asks user if task completed and deletes completed task
 
-open_list()
-delete_number()
-number_tasks()
-open_list()
+def main():
+    ascii_art = pyfiglet.figlet_format("To-Do-List", font ="slant")
+    print(ascii_art)
+    print()
+    print()
+    print("Do You Want to Start a New To-Do-List or Acces an Existing One?")
+    while True:                         #add fehler einfangen und if else zu ende schreiben 
+                                        # nicht vergessen nummerrierung einzubauen
+        var = input("please enter 'new' for a new list or 'old' for an existing list").strip().lower()
+        if var == "new":
+            create_new_list()
+            add_item()
 
+
+if __name__ == "__main__":
+    main()
