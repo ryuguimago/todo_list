@@ -4,15 +4,12 @@ from time import sleep
 # creates a new, empty todo list with headline 'to-do-list'
 def create_new_list():
     with open("list.txt", "w") as file:
-        file.write("To-Do-List\n")         
+        file.write("To-Do-List")         
 
 # opens the existing list and displays its content
 def open_list():
    with open('list.txt', 'r') as file:
-    while True:
-        line = file.readline()
-        if not line:
-            break
+    for line in file:
         print(line.strip())
         
     
@@ -71,7 +68,7 @@ def delete_lines(filename, lines_to_delete):
         lines = file.readlines()
     # write back only lines not to be deleted 
     with open("list.txt", "w") as file:
-        for index, line in enumerate(lines, start=0):   #iterates through lines
+        for index, line in enumerate(lines):   #iterates through lines
             if index not in lines_to_delete:            #writes whats not in the lines_to_delete list
                 file.write(line)
 
@@ -101,8 +98,7 @@ def main():
                 except FileNotFoundError:
                     print("you dont have a to-do-list yet")
                     print()
-            else:
-                if var == 3:
+            elif var == 3:
                     add_item()
                     delete_number()
                     number_tasks()
@@ -110,12 +106,10 @@ def main():
                     print()
                     open_list()
                     print()
-                elif var == 4:  #todo Handle input errors:
+            elif var == 4:  #todo Handle input errors:
                     open_list()
                     lines_to_delete_input = input("Please enter the numbers of the tasks you'd like to delete, separated by a comma: ") #gets user input as string
-                    if not lines_to_delete_input.isdigit():
-                        print("please select a task using the numbering")
-                    else:
+                    try:
                         lines_to_delete = [int(x.strip()) for x in lines_to_delete_input.split(",") if x.strip().isdigit()] # cuts the string by the','s converts it to int and saves it in a list all in one line very cool!
                         delete_lines("list.txt", lines_to_delete)
                         delete_number()
@@ -123,11 +117,12 @@ def main():
                         print("This is your new to-do-list:")
                         open_list()
                         print()
-                else:
-                    if var == 5:
-                        exit()
-                    else:
-                        print("please use the designated numbers to indicate your choice")
+                    except ValueError:          #wird meiner ansicht nach nicht getriggert muss bessere methode geben
+                        print("please enter the numbers of the task you'd like to delete, seperated by commas: ")
+            elif var == 5:
+                    exit()
+            else:
+                print("please use the designated numbers to indicate your choice")
         except ValueError:
             print("please use the designated numbers to indicate your choice")
 
