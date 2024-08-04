@@ -1,3 +1,6 @@
+# todo:check for redundancies in the main function, put error check from main in open_list function, 
+#test edge cases, ensure consistend error handling, improve readablitiy 
+
 # this is a command line to do list program
 import pyfiglet
 from time import sleep
@@ -105,7 +108,7 @@ def main():
                     print()
                     open_list()
                     print()
-            elif var == 4:  #todo Handle input errors:
+            elif var == 4:  
                     open_list()
                     lines_to_delete_input = input("Please enter the numbers of the tasks you'd like to delete, separated by a comma: ") #gets user input as string
                     try:
