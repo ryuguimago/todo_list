@@ -1,6 +1,7 @@
 # this is a command line to do list program
 import pyfiglet
 from time import sleep
+from termcolor import colored, cprint
 # creates a new, empty todo list with headline 'to-do-list'
 def create_new_list():
     with open("list.txt", "w") as file:
@@ -10,7 +11,7 @@ def create_new_list():
 def open_list():
    with open('list.txt', 'r') as file:
     for line in file:
-        print(line.strip())
+        cprint(line.strip(), "magenta")
         
     
 
@@ -28,7 +29,7 @@ def add_item():
                 elif var == "n":
                     return          #returns to main function
                 else:
-                    print("please use 'y' or 'n' to indicate your choice")
+                    cprint("please use 'y' or 'n' to indicate your choice", "red")
                          
               
 
@@ -77,11 +78,9 @@ def main():
     print(ascii_art)
     print()
     print()
-    print("welcome to the main menu of your to do list\n")
     sleep(2)
-    print("what would you like to do?\n")
     while True:
-        print("""1. start a new list\n2. see whats on your to-do-list\n3. add to your to-do-list\n4. delete a completed task from your to-do-list\n5. quit""" )
+        cprint("""      MENU\n1. start a new list\n2. see whats on your to-do-list\n3. add to your to-do-list\n4. delete a completed task from your to-do-list\n5. quit""", "yellow" )
         try:
             var = int(input("please press the corresponding number\n"))
             if var == 1:
@@ -93,16 +92,16 @@ def main():
                 try:
                     open_list()
                     print()
-                    print("would you like to add or delete something?")
+                    cprint("would you like to add or delete something?", "green")
                     print()
                 except FileNotFoundError:
-                    print("you dont have a to-do-list yet")
+                    cprint("you dont have a to-do-list yet", "red")
                     print()
             elif var == 3:
                     add_item()
                     delete_number()
                     number_tasks()
-                    print("this is your new to-do-list")
+                    cprint("this is your new to-do-list", "green")
                     print()
                     open_list()
                     print()
@@ -114,17 +113,17 @@ def main():
                         delete_lines("list.txt", lines_to_delete)
                         delete_number()
                         number_tasks()
-                        print("This is your new to-do-list:")
+                        cprint("This is your new to-do-list:", "green")
                         open_list()
                         print()
                     except ValueError:          #wird meiner ansicht nach nicht getriggert muss bessere methode geben
-                        print("please enter the numbers of the task you'd like to delete, seperated by commas: ")
+                        cprint("please enter the numbers of the task you'd like to delete, seperated by commas: ", "red")
             elif var == 5:
                     exit()
             else:
-                print("please use the designated numbers to indicate your choice")
+                cprint("please use the designated numbers to indicate your choice", "red")
         except ValueError:
-            print("please use the designated numbers to indicate your choice")
+            cprint("please use the designated numbers to indicate your choice", "red")
 
             
             

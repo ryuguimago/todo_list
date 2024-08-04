@@ -1,6 +1,4 @@
 To-Do-List
-1. fjkdlsf
-2. hallo
-3. was geth
-4. test
-5. habs
+1. hallo
+2. test
+3. color

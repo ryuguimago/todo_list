@@ -1,0 +1,9 @@
+# check list comprehension
+def delete_number():
+    with open("list.txt", "r") as file:
+        lines = file.readlines()
+    with open("list.txt", "w") as file:
+        for line in lines:
+            parts = line.split(". ", 1)
+            clean = parts[1] if len(parts) > 1 and parts[0].strip().isdigit() else line #alles in einer zeile 
+            file.write(clean)
