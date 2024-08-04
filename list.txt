@@ -1,3 +1,10 @@
 To-Do-List
-erste
-zweite
+bla
+bla
+bli
+whole
+this and that
+blue
+8
+joe biden
+& C:/Users/janos/AppData/Local/Programs/Python/Python312/python.exe c:/Users/janos/Desktop/Projekte/todo_list/todo.py

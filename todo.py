@@ -1,5 +1,6 @@
 # this is a command line to do list program
 import pyfiglet
+from time import sleep
 # creates a new, empty todo list with headline 'to-do-list'
 def create_new_list():
     with open("list.txt", "w") as file:
@@ -20,15 +21,19 @@ def open_list():
 # takes user input and saves it to the existing list
 def add_item():
     while True:
-        new_item = input("what do you want to add\n")                   #ausnahmen einfangen und error handling noch einfügen
+        new_item = input("what do you want to add\n")                
         with open("list.txt", "a") as file:
             file.write(f"\n{new_item}")
-            try:
+            while True:
                 var = input("do you want to add a nother item? y/n\n").strip().lower()
-                if var == "n":
+                if var == "y":
                     break
-            except ValueError:
-                print("please use 'y' or 'n' to indicate your choice")
+                elif var == "n":
+                    return
+                else:
+                    print("please use 'y' or 'n' to indicate your choice")
+                         
+              
 
 
 
@@ -63,20 +68,18 @@ def delete_lines(filename, lines_to_delete):
             if index not in lines_to_delete:
                 file.write(line)
 
-
+  #add fehler einfangen und if else zu ende schreiben 
+ # nicht vergessen nummerrierung einzubauen
 def main():
     ascii_art = pyfiglet.figlet_format("To-Do-List", font ="slant")
     print(ascii_art)
     print()
     print()
-    print("Do You Want to Start a New To-Do-List or Acces an Existing One?")
-    while True:                         #add fehler einfangen und if else zu ende schreiben 
-                                        # nicht vergessen nummerrierung einzubauen
-        var = input("please enter 'new' for a new list or 'old' for an existing list").strip().lower()
-        if var == "new":
-            create_new_list()
-            add_item()
-
+    print("welcome to the main menu of your to do list\n")
+    sleep(2)
+    print("what would you like to do?\n")
+    print("""1. start a new list\n2. see whats on your to-do-list\n3. add to your to-do-list\n4. delete a completed task from your to-do-list\n5. quit""" )
+    var = int(input("please press the corresponding number"))
 
 if __name__ == "__main__":
-    main()
+   main()
