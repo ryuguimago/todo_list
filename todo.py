@@ -1,10 +1,10 @@
-# todo:check for redundancies in the main function, put error check from main in open_list function, 
+# todo:check for redundancies in the main function,
 #test edge cases, ensure consistend error handling, improve readablitiy 
 
 # this is a command line to do list program
 import pyfiglet
 from time import sleep
-from termcolor import colored, cprint
+from termcolor import cprint
 # creates a new, empty todo list with headline 'to-do-list'
 def create_new_list():
     with open("list.txt", "w") as file:
@@ -12,10 +12,12 @@ def create_new_list():
 
 # opens the existing list and displays its content
 def open_list():
-   with open('list.txt', 'r') as file:
-    for line in file:
-        cprint(line.strip(), "magenta")
-        
+    try:
+        with open('list.txt', 'r') as file:
+            for line in file:
+                cprint(line.strip(), "magenta")
+    except FileNotFoundError:
+        cprint("You don't have a to-do list yet", "red")
     
 
 
@@ -23,19 +25,19 @@ def open_list():
 def add_item():
     while True:
         new_item = input("what do you want to add\n")                
-        with open("list.txt", "a") as file:
+        with open("list.txt", "a") as file:     #a rights
             file.write(f"\n{new_item}")
             while True:
                 var = input("do you want to add a nother item? y/n\n").strip().lower()
-                if var == "y":
+                if var == "y":          # leaves the while loop
                     break
                 elif var == "n":
                     return          #returns to main function
                 else:
-                    cprint("please use 'y' or 'n' to indicate your choice", "red")
+                    cprint("please use 'y' or 'n' to indicate your choice", "red") #catches errors and exceptions
                          
               
-
+# to ensure tasks can be easy identified and deleted we need to consistenly number them and update the numbering everytime something gets changed
 
 
 # deletes old numbers of tasks
@@ -65,8 +67,8 @@ def number_tasks():
            
 
 
-# deletes specific lines from list
-def delete_lines(filename, lines_to_delete):
+# deletes specific lines from list / deletes completed tasks
+def delete_lines(filename, lines_to_delete):    #function takes two arguments
     # open file
     with open("list.txt", "r") as file:
         lines = file.readlines()
@@ -81,8 +83,8 @@ def main():
     print(ascii_art)
     print()
     print()
-    sleep(2)
-    while True:
+    sleep(1)
+    while True: #ensures it always returns to menu unless user quits 
         cprint("""      MENU\n1. start a new list\n2. see whats on your to-do-list\n3. add to your to-do-list\n4. delete a completed task from your to-do-list\n5. quit""", "yellow" )
         try:
             var = int(input("please press the corresponding number\n"))
@@ -92,15 +94,10 @@ def main():
                 delete_number()     #cleans the numeration in case user put wrong numbers 
                 number_tasks()      #correctly numbers the tasks
             elif var == 2:
-                try:
-                    open_list()
-                    print()
-                    cprint("would you like to add or delete something?", "green")
-                    print()
-                except FileNotFoundError:
-                    cprint("you dont have a to-do-list yet", "red")
-                    print()
-            elif var == 3:
+                open_list() #opens list, displays tasks 
+                print()
+                print()      
+            elif var == 3:  #lets user add task and ensures correct numbering
                     add_item()
                     delete_number()
                     number_tasks()
