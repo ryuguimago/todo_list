@@ -37,18 +37,15 @@ def add_item():
 # to ensure tasks can be easy identified and deleted we need to consistenly number them and update the numbering everytime something gets changed
 
 
-# deletes old numbers of tasks
+# deletes old numbers of tasks new with list comprehension
 def delete_number():
     with open("list.txt", "r") as file:
-        lines =file.readlines()
-        with open("list.txt", "w") as file:
-            for line in lines:
-                parts = line.split(". ", 1) #splits the lines after the first '. ' to seperate the number from the task. the space behind the'.' is importend
-                if len(parts) > 1 and parts[0].strip().isdigit():   # checks if the line was numbered
-                    clean = parts[1]   #saves only the part after the '.'
-                else:
-                    clean = line # keeps unnumbered lines e.g. headline
-                file.write(clean)   #writes the clean line back
+        lines = file.readlines()
+    with open("list.txt", "w") as file:
+        for line in lines:
+            parts = line.split(". ", 1)
+            clean = parts[1] if len(parts) > 1 and parts[0].strip().isdigit() else line #alles in einer zeile 
+            file.write(clean)
 
 # numbers the tasks based on position in list
 def number_tasks():
