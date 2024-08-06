@@ -1,7 +1,4 @@
-# todo:check for redundancies in the main function,
-#test edge cases, ensure consistend error handling, improve readablitiy 
-
-# this is a command line to do list program
+# this is a command line to-do-list program
 import pyfiglet
 from time import sleep
 from termcolor import cprint
@@ -108,16 +105,15 @@ def main():
             elif var == 4:  
                     open_list()
                     lines_to_delete_input = input("Please enter the numbers of the tasks you'd like to delete, separated by a comma: ") #gets user input as string
-                    try:
-                        lines_to_delete = [int(x.strip()) for x in lines_to_delete_input.split(",") if x.strip().isdigit()] # cuts the string by the','s converts it to int and saves it in a list all in one line very cool!
-                        delete_lines("list.txt", lines_to_delete)
-                        delete_number()
-                        number_tasks()
-                        cprint("This is your new to-do-list:", "green")
-                        open_list()
-                        print()
-                    except ValueError:          #wird meiner ansicht nach nicht getriggert muss bessere methode geben
-                        cprint("please enter the numbers of the task you'd like to delete, seperated by commas: ", "red")
+                    lines_to_delete = [int(x.strip()) for x in lines_to_delete_input.split(",") if x.strip().isdigit()] # cuts the string by the','s converts it to int and saves it in a list all in one line very cool!
+                    delete_lines("list.txt", lines_to_delete)
+                    delete_number()
+                    number_tasks()
+                    cprint("This is your new to-do-list:", "green")
+                    open_list()                        
+                    print()
+                                        #deleted previous try except block because it was nerver triggert and it seems to work the same without it 
+                                        #might come back with other idea to handle error 
             elif var == 5:
                     exit()
             else:
